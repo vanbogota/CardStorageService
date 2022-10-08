@@ -27,8 +27,4 @@
     <ProjectReference Include="..\CardStorageService.DAL\CardStorageService.DAL.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
