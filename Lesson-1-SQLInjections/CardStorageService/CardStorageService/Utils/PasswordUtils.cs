@@ -26,7 +26,7 @@ namespace CardStorageService.Utils
             return (passwordSalt, passwordHash);
         }
 
-        public static bool VerifyPassword(string password, string passwordSalt,
+        public static bool VerifyPassword(string password,string passwordSalt,
             string passwordHash)
         {
             return GetPasswordHash(password, passwordSalt) == passwordHash;
