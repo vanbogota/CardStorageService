@@ -31,11 +31,11 @@ namespace CardStorageService.Utils
     {
         static byte[] additionalEntropy = { 1, 2, 3, 4, 5 };
 
-        public void CacheConnections(List<ConnectionString> connections)
+        public void CacheConnections(ConnectionString connections)
         {
             try
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ConnectionString>));
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(ConnectionString));
 
                 using MemoryStream memoryStream = new MemoryStream();
                 using XmlTextWriter xmlTextWriter = new XmlTextWriter(memoryStream, Encoding.UTF8);
@@ -66,16 +66,16 @@ namespace CardStorageService.Utils
             }
         }
 
-        public List<ConnectionString> GetConnectionsFromCache()
+        public ConnectionString GetConnectionsFromCache()
         {
             try
             {
-                XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<ConnectionString>));
+                XmlSerializer xmlSerializer = new XmlSerializer(typeof(ConnectionString));
 
                 byte[] protectedData = File.ReadAllBytes("data.protected");
                 byte[] data = Unprotect(protectedData);
 
-                return (List<ConnectionString>)xmlSerializer.Deserialize(new MemoryStream(data));
+                return (ConnectionString)xmlSerializer.Deserialize(new MemoryStream(data));
             }
             catch (Exception e)
             {

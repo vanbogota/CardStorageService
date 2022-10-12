@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using CardStorageService.Utils;
 
 namespace CardStorageService
 {
@@ -15,6 +16,15 @@ namespace CardStorageService
     {
         public static void Main(string[] args)
         {
+            ConnectionString connectionString = new ConnectionString();
+            connectionString.DataSourse = "DESKTOP-T4GF27V\\SQLEXPRESS";
+            connectionString.DatabaseName = "CardStorageService";
+            connectionString.UserId = "CardStorageServiceUser";
+            connectionString.Password = "1234567890";
+
+            CacheConnectionString cacheConnectionString = new CacheConnectionString();
+            cacheConnectionString.CacheConnections(connectionString);
+
             var builder = WebApplication.CreateBuilder(args);
 
             #region Logging service
@@ -41,7 +51,9 @@ namespace CardStorageService
 
             builder.Services.AddDbContext<CardStorageServiceDbContext>(options =>
             {
-                options.UseSqlServer(builder.Configuration["Settings:DatabaseOptions:ConnectionString"]);
+                var configStr = cacheConnectionString.GetConnectionsFromCache();
+                options.UseSqlServer(builder.Configuration[$"{configStr.ToString}"]);
+                //options.UseSqlServer(builder.Configuration["Settings:DatabaseOptions:ConnectionString"]);
             });
             #endregion
 
