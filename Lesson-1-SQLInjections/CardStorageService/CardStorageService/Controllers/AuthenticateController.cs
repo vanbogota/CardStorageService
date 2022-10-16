@@ -1,5 +1,4 @@
-﻿using CardStorageService.DAL;
-using CardStorageService.Models;
+﻿using CardStorageService.Models;
 using CardStorageService.Models.Requests;
 using CardStorageService.Services;
 using Microsoft.AspNetCore.Authorization;
