@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardStorageService", "CardS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardStorageService.DAL", "CardStorageService.DAL\CardStorageService.DAL.csproj", "{33A67BA8-B389-48A9-8DF6-BC83046EF201}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesterClient", "TesterClient\TesterClient.csproj", "{D4B310C8-9F4F-45AE-AB58-94D5162FF158}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TesterClient", "TesterClient\TesterClient.csproj", "{D4B310C8-9F4F-45AE-AB58-94D5162FF158}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

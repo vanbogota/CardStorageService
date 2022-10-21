@@ -9,6 +9,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using CardStorageService.Utils;
+using FluentValidation;
+using AutoMapper;
+using CardStorageService.Mappings;
+using CardStorageService.Models.Requests;
+using CardStorageService.Models.Validators;
 
 namespace CardStorageService
 {
@@ -26,6 +31,11 @@ namespace CardStorageService
             cacheConnectionString.CacheConnections(connectionString);
 
             var builder = WebApplication.CreateBuilder(args);
+            var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MappingProfile()));
+            var mapper = mapperConfiguration.CreateMapper();
+
+            builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
+            builder.Services.AddSingleton(mapper);
 
             #region Logging service
 
@@ -61,6 +71,7 @@ namespace CardStorageService
 
             builder.Services.AddScoped<IClientRepositoryService, ClientRepository>();
             builder.Services.AddScoped<ICardRepositoryService, CardRepository>();
+            builder.Services.AddScoped<IAccountRepositoryService, AccountRepository>();
 
             #endregion
 

@@ -2,7 +2,6 @@
 using CardStorageService.Models;
 using CardStorageService.Models.Requests;
 using CardStorageService.Services;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CardStorageService.Controllers
