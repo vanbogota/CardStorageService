@@ -3,6 +3,7 @@ using CardStorageService.Models;
 using CardStorageService.Models.Requests;
 using CardStorageService.Services;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace CardStorageService.Controllers
 {
@@ -12,10 +13,12 @@ namespace CardStorageService.Controllers
     {
         private readonly ILogger<CardController> _logger;
         private readonly ICardRepositoryService _cardRepositoryService;
-        public CardController(ILogger<CardController> logger, ICardRepositoryService cardRepositoryService)
+        private readonly IMapper _mapper;
+        public CardController(ILogger<CardController> logger, ICardRepositoryService cardRepositoryService, IMapper mapper)
         {
             _logger = logger;
             _cardRepositoryService = cardRepositoryService;
+            _mapper = mapper;
         }
 
         [HttpPost("Create")]
@@ -24,13 +27,7 @@ namespace CardStorageService.Controllers
         {
             try
             {
-                var cardId = _cardRepositoryService.Create(new Card
-                {
-                    ClientId = request.ClientId,
-                    CardNo = request.CardNo,
-                    ExpDate = request.ExpDate,
-                    CVV2 = request.CVV2
-                });
+                var cardId = _cardRepositoryService.Create(_mapper.Map<Card>(request));
                 return Ok(new CreateCardResponse
                 {
                     CardId = cardId.ToString()

@@ -4,6 +4,7 @@ using CardStorageService.Models.Requests;
 using CardStorageService.Services;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using AutoMapper;
 
 namespace CardStorageService.Controllers
 {
@@ -13,11 +14,13 @@ namespace CardStorageService.Controllers
     {
         private readonly ILogger<ClientController> _logger;
         private readonly IClientRepositoryService _clientRepositoryService;
+        private readonly IMapper _mapper;
 
-        public ClientController(ILogger<ClientController> logger, IClientRepositoryService clientRepositoryService)
+        public ClientController(ILogger<ClientController> logger, IClientRepositoryService clientRepositoryService, IMapper mapper)
         {
             _logger = logger;
             _clientRepositoryService = clientRepositoryService;
+            _mapper = mapper;
         }
 
         [HttpPost("create")]
@@ -26,12 +29,7 @@ namespace CardStorageService.Controllers
         {
             try
             {
-                var clientId = _clientRepositoryService.Create(new Client
-                {
-                    FirstName = request.FirstName,
-                    Surname = request.Surname,
-                    Patronymic = request.Patronymic
-                });
+                var clientId = _clientRepositoryService.Create(_mapper.Map<Client>(request));
                 return Ok(new CreateClientResponse
                 {
                     ClientId = clientId
