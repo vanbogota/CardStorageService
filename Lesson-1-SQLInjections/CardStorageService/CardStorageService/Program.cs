@@ -14,6 +14,7 @@ using AutoMapper;
 using CardStorageService.Mappings;
 using CardStorageService.Models.Requests;
 using CardStorageService.Models.Validators;
+using CardStorageService.Services.Impl;
 
 namespace CardStorageService
 {
@@ -26,7 +27,7 @@ namespace CardStorageService
             connectionString.DatabaseName = "CardStorageService";
             connectionString.UserId = "CardStorageServiceUser";
             connectionString.Password = "1234567890";
-
+            
             CacheConnectionString cacheConnectionString = new CacheConnectionString();
             cacheConnectionString.CacheConnections(connectionString);
 
@@ -34,8 +35,18 @@ namespace CardStorageService
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MappingProfile()));
             var mapper = mapperConfiguration.CreateMapper();
 
+            #region Configure GRPC
+
+            builder.Services.AddGrpc();
+
+            #endregion
+
+            #region Configure FluentValidator and Mapper
+
             builder.Services.AddScoped<IValidator<AuthenticationRequest>, AuthenticationRequestValidator>();
             builder.Services.AddSingleton(mapper);
+
+            #endregion
 
             #region Logging service
 
@@ -148,6 +159,8 @@ namespace CardStorageService
 
             app.UseHttpLogging();
 
+            app.MapGrpcService<ClientService>();
+            app.MapGrpcService<CardService>();
             app.MapControllers();
 
             app.Run();

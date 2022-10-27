@@ -1,4 +1,4 @@
-﻿using CardStorageService.DAL;
+﻿//using CardStorageService.DAL;
 using CardStorageServiceProtos;
 using Grpc.Core;
 using static CardStorageServiceProtos.CardService;
@@ -18,7 +18,7 @@ namespace CardStorageService.Services.Impl
         {
             var response = new GetByClientIdResponse();
 
-            response.Cards.AddRange(_cardRepositoryService.GetByClientId(request.ClientId.ToString())
+            response.Cards.AddRange(_cardRepositoryService.GetByClientId(request.ClientId)
                 .Select(card => new Card
                 {
                     CardNo = card.CardNo,

@@ -1,4 +1,4 @@
-﻿using CardStorageService.Models.Requests;
+﻿using CardStorageService.DAL;
 using CardStorageServiceProtos;
 using Grpc.Core;
 using static CardStorageServiceProtos.ClientService;
@@ -7,7 +7,6 @@ namespace CardStorageService.Services.Impl
 {
     public class ClientService : ClientServiceBase
     {
-
         private readonly IClientRepositoryService _clientRepositoryService;
 
         public ClientService(IClientRepositoryService clientRepositoryService)
@@ -17,7 +16,7 @@ namespace CardStorageService.Services.Impl
 
         public override Task<CreateClientResponse> Create(CreateClientRequest request, ServerCallContext context)
         {
-            var clientId = _clientRepositoryService.Create(new Data.Client
+            var clientId = _clientRepositoryService.Create(new Client
             {
                 FirstName = request.FirstName,
                 Surname = request.SurName,
@@ -26,11 +25,12 @@ namespace CardStorageService.Services.Impl
 
             var response = new CreateClientResponse
             {
-                ClientId = clientId
+                ClientId = clientId,
+                ErrorCode = 0,
+                ErrorMessage = String.Empty,                           
             };
 
             return Task.FromResult(response);
         }
-
     }
 }

@@ -21,6 +21,8 @@ message CreateClientRequest{
 
 message CreateClientResponse{
 	int32 ClientId =  1;
+	int32 ErrorCode = 2;
+    string ErrorMessage = 3;
 }
 
 
@@ -39,3 +41,4 @@ message Card{
 	string CVV2 = 3;
 	string ExpDate = 4;
 }
+
