@@ -26,7 +26,7 @@ namespace CardStorageService
             connectionString.DataSourse = "DESKTOP-T4GF27V\\SQLEXPRESS";
             connectionString.DatabaseName = "CardStorageService";
             connectionString.UserId = "CardStorageServiceUser";
-            connectionString.Password = "1234567890";
+            connectionString.Password = "12345";
             
             CacheConnectionString cacheConnectionString = new CacheConnectionString();
             cacheConnectionString.CacheConnections(connectionString);
@@ -73,7 +73,9 @@ namespace CardStorageService
             builder.Services.AddDbContext<CardStorageServiceDbContext>(options =>
             {
                 var configStr = cacheConnectionString.GetConnectionsFromCache();
-                options.UseSqlServer(builder.Configuration[$"{configStr.ToString}"]);
+                var connectStr = configStr.ToString();
+                //var connectStr = builder.Configuration[$"{configStr.ToString}"];
+                options.UseSqlServer(connectStr);
                 //options.UseSqlServer(builder.Configuration["Settings:DatabaseOptions:ConnectionString"]);
             });
             #endregion

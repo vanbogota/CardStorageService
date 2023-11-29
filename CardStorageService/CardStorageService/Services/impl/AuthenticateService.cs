@@ -11,7 +11,7 @@ namespace CardStorageService.Services.impl
 {
     public class AuthenticateService : IAuthenticateService
     {
-        public const string SecretKey = "qwerty";
+        public const string SecretKey = "qwerty is my secret key and bla bla blabla";
 
         private readonly Dictionary<string, SessionInfo> _sessions =
             new Dictionary<string, SessionInfo>();

@@ -72,7 +72,7 @@ namespace CardStorageService.Utils
             {
                 XmlSerializer xmlSerializer = new XmlSerializer(typeof(ConnectionString));
 
-                byte[] protectedData = File.ReadAllBytes("data.protected");
+                byte[] protectedData = File.ReadAllBytes("MyData.protected");
                 byte[] data = Unprotect(protectedData);
 
                 return (ConnectionString)xmlSerializer.Deserialize(new MemoryStream(data));
